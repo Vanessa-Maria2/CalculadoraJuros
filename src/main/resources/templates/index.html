@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<meta charset="UTF-8">
+	<title>Calculadora de Juros Simples e Composto</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+	<div class="container">
+		<div class="text-center">
+			<h1 class="mr-center text-uppercase my-0">Calculadora</h1>
+			<h3 class="mr-center text-uppercase my-0">Juros Simples e Composto</h3>
+		</div>
+		<hr class="my-4">
+		<div>
+			<div class="text-center" th:if="${mensagens} != null">
+				<span id="msg-erro" th:text="${mensagens}"></span>
+			</div>
+			<form th:action="@{/calculadora/calcular}" method="get" class="mt-4 pt-2" th:object="${juros}">
+			   <div id="form">	 
+				 <div class="row">
+					<div class="input-field">
+						<label class="text-uppercase font-weight-bold" for="capital">Valor inicial</label>
+						<div class="input-group">
+							<span class="input-group-text" id="addon-wrapping">R$</span>
+							<input id="capital" name="capital" th:field="${juros.capital}" type="number" min="0" step="0.01" placeholder="0,00" class="form-control" required/>
+						</div>
+					</div>
+					<div class="input-field" >
+						<label class="text-uppercase font-weight-bold" for="taxaDeJuros">Taxa de Juros</label>
+						<div class="input-group">
+							<span class="input-group-text" id="addon-wrapping">%</span>
+							<input id="taxaDeJuros" type="number" name="taxaDeJuros" th:value="${juros.taxaDeJuros}" placeholder="0,00" class="form-control" min="0" step="0.01" required/>
+							<select style="width: 5px" id="tipoDeTaxa" name="tipoDeTaxa" th:field="*{tipoDeTaxa}" class="form-control">
+								<option value="0">Dia</option>
+								<option value="1">Mês</option>
+								<option value="2">Ano</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div  class="input-field">
+						<label class="text-uppercase font-weight-bold" for="periodo">Período em</label>
+						<div class="input-group" id="grupoTempo">
+							<input id="tempo" type="number" name="tempo" th:value="${juros.tempo}" placeholder="0" class="form-control" min="0" step="1" required/>
+							<select style="width: 5px" id="tipoDeTempo" name="tipoDeTempo" th:field="*{tipoDeTempo}" class="form-control">
+								<option value="0">Dia</option>
+								<option value="1">Mês</option>
+								<option value="2">Ano</option>
+							</select>
+						</div>
+					</div>
+					<div class="input-field" id="grupoJuros">
+						<label class="text-uppercase font-weight-bold" for="tipoDeJuros">Tipo de juros</label>
+						<select id="tipoDeJuros" name="tipoDeJuros" th:field="*{tipoDeJuros}" class="form-control">
+							<option value="0">Simples</option>
+							<option value="1">Compostos</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<div id="botoes">
+				<button id="btn-calcular" type="submit" class="btn btn-primary">
+					<span class="span-btn">Calcular</span>
+				</button>
+				<button id="btn-limpar" type="reset" class="btn btn-primary">
+					<span class="span-btn">Limpar</span>
+				</button>
+			</div>
+			</form>
+			<br>
+			<br>
+			<div id="btn-resultado">
+				<label class="text-uppercase font-weight-bold" for="resultado">Resultado</label>
+				<input id="btn" name="resultado" class="form-control"  type="text" th:value="${juros.juros}" disabled/>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="js">
+		<script type="text/javascript">
+		
+		$(document).ready(function() {
+			$("#tipoDeTaxa").val([[${tipoDeTaxa}]]);
+			$("#tipoDeTempo").val([[${tipoDeTempo}]]);
+			$("#tipoDeJuros").val([[${tipoDeJuros}]]);
+		});
+		</script>
+	</th:block>
+	
+	
+</body>
+</html>
