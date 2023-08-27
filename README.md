@@ -1,4 +1,3 @@
-# CalculadoraJuros
-Calculadora de Juros Simples e Composto
+# Calculadora de Juros Simples e Composto
 
 <img src="/src/main/resources/static/imagens/calculadora.png">
